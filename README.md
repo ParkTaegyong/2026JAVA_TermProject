@@ -1,5 +1,6 @@
-# Project title : Cafe kiosk System
+# TermProject: proposal
 
+## Project title : Cafe kiosk System
 
 ## Team Members
 * 박태경 - 22300333
