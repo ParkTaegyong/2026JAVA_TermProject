@@ -9,23 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// 키오스크를 조작하는 클래스
 
 
 public class Controller {
     Scanner sc = new Scanner(System.in);
-    // 커피, 디저트 메뉴를 리스트로 관리
+    // Manage the coffee and dessert menus as a list
     private List<Coffee> coffeeList = new ArrayList<>();
     private List<Dessert> dessertList = new ArrayList<>();
     private List<Coffee> coffeeCartList = new ArrayList<>();
     private List<Dessert> dessertCartList = new ArrayList<>();
-    // 관리자 목록을 위한 리스트
+    // List of administrators
     private List<Coffee> soldCoffeeList = new ArrayList<>();
     private List<Dessert> soldDessertList = new ArrayList<>();
     private int totalSales = 0;
 
     public Controller() {
-        // 메뉴 설정
+        // Menu Settings
         coffeeList.add(new Coffee("Americano", 3500, false));
         coffeeList.add(new Coffee("Coffee Latte", 4000, false));
         coffeeList.add(new Coffee("Mocha Coffee", 4500, false));
@@ -144,9 +143,9 @@ public class Controller {
         int cartChoice = safeInput();
 
         if (cartChoice == 1) {
-            return true; // "결제하러 가겠다"는 신호를 보냄
+            return true;
         } else {
-            return false; // 메인 메뉴로 돌아감
+            return false;
         }
     }
 
@@ -181,11 +180,11 @@ public class Controller {
                 return;
             }
             p.pay(total);
-            //총 매출 계산
+            //Calculate total sales
             totalSales += total;
             soldCoffeeList.addAll(coffeeCartList);
             soldDessertList.addAll(dessertCartList);
-            // 다음 손님을 위해서 리스트 클리어
+            // Clear the list for the next guest
             coffeeCartList.clear();
             dessertCartList.clear();
 
@@ -216,14 +215,13 @@ public class Controller {
         System.out.println("Press Enter to return...");
         sc.nextLine();
     }
-    // Controller.java 내부
 
     public int safeInput() {
         while (true) {
             try {
                 return Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
-                System.out.print("! 숫자만 입력 가능합니다. 다시 입력 > ");
+                System.out.print("! Only numbers are allowed. Try again >  ");
             }
         }
     }
