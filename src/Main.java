@@ -16,7 +16,7 @@ public class Main {
         do {
             ct.showMenu();
             System.out.print("Please Select Number > ");
-            int choice = Integer.parseInt(sc.nextLine()); // 엔터 버퍼 방지를 위해 nextLine 사용
+            int choice = ct.safeInput(); // 엔터 버퍼 방지를 위해 nextLine 사용
 
             if (choice == 1 || choice == 2) {
                 ct.selectMenu(choice); // 커피 또는 디저트 선택

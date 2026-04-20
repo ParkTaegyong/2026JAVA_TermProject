@@ -36,28 +36,36 @@ public class Controller {
 
 
     public void showMenu() {
-        System.out.println("----------MENU----------");
-        System.out.println("--------1.Coffee--------");
-        System.out.println("--------2.Dessert-------");
-        System.out.println("-------3.Show Cart------");
-        // After selecting your coffee, you can proceed to the payment page from the home screen.
-        System.out.println("----4.Choose Payment----");
-        System.out.println("----0.System out----");
+        System.out.println();
+        System.out.println("╔════════════ [ CAFE ] ═══════════╗");
+        System.out.println("║  1. Coffee Menu                 ║");
+        System.out.println("║  2. Dessert Menu                ║");
+        System.out.println("║  3. View Cart                   ║");
+        System.out.println("║  4. Checkout                    ║");
+        System.out.println("║  9. Admin Mode                  ║");
+        System.out.println("║  0. Exit                        ║");
+        System.out.println("╚═════════════════════════════════╝" );
 
     }
 
     public void showCoffeeMenu() {
-        System.out.println("----------Coffee----------");
-        for (int i = 0; i < coffeeList.toArray().length; i++) {
-            System.out.println((i + 1) + "." + coffeeList.get(i).getName());
+        System.out.println("╔════════════ [ COFFEE ] ═══════════╗");
+        for (int i = 0; i < coffeeList.size(); i++) {
+            String menuLine = (i + 1) + ". " + coffeeList.get(i).getName();
+            System.out.printf("║  %-31s  ║\n", menuLine);
         }
+        System.out.println("║  0. Back to the Menu              ║");
+        System.out.println("╚═══════════════════════════════════╝");
     }
 
     public void showDessertMenu() {
-        System.out.println("----------Dessert----------");
-        for (int i = 0; i < dessertList.toArray().length; i++) {
-            System.out.println((i + 1) + "." + dessertList.get(i).getName());
+        System.out.println("╔════════════ [ DESSERT ] ══════════╗");
+        for (int i = 0; i < dessertList.size(); i++) {
+            String menuLine = (i + 1) + ". " + dessertList.get(i).getName();
+            System.out.printf("║  %-31s  ║\n", menuLine);
         }
+        System.out.println("║  0. Back to the Menu              ║");
+        System.out.println("╚═══════════════════════════════════╝");
     }
 
 
@@ -71,9 +79,8 @@ public class Controller {
                 showDessertMenu();
             }
 
-            System.out.println("0. Back to the Menu");
-            System.out.println("Please select your order number");
-            int num = Integer.parseInt(sc.nextLine());
+            System.out.print("Please select your order number > ");
+            int num = safeInput();
 
             if (num == 0) {
                 stay = false;
@@ -83,7 +90,7 @@ public class Controller {
                     // `Coffee` based on the entered number
                     Coffee selected = coffeeList.get(num - 1);
                     System.out.println("Would you like some ice? [YES : 1] [NO : 2]");
-                    boolean ice = (Integer.parseInt(sc.nextLine()) == 1);
+                    boolean ice = (safeInput() == 1);
                     addToCoffeeCart(selected.getName(), selected.getPrice(), ice);
                 } else if (choice == 2 && num > 0 && num <= dessertList.size()) {
                     // References the contents of the DessertList corresponding
@@ -93,7 +100,7 @@ public class Controller {
                 }
 
                 System.out.println("\nStay in this category and order more? [1: YES / 2: NO(Back to Main)]");
-                if (Integer.parseInt(sc.nextLine()) == 2) {
+                if (safeInput() == 2) {
                     stay = false;
                 }
             }
@@ -134,7 +141,7 @@ public class Controller {
         System.out.println("2. Back to Main Menu");
         System.out.print("Select Number > ");
 
-        int cartChoice = Integer.parseInt(sc.nextLine());
+        int cartChoice = safeInput();
 
         if (cartChoice == 1) {
             return true; // "결제하러 가겠다"는 신호를 보냄
@@ -161,7 +168,7 @@ public class Controller {
         }
         System.out.println("1. Card  2. Cash  0.Back to Menu");
         System.out.print("Select Payment Method > ");
-        int payMethod = Integer.parseInt(sc.nextLine());
+        int payMethod = safeInput();
         if (payMethod > 0) {
             IPayment p = null;
             if (payMethod == 1) {
@@ -208,6 +215,17 @@ public class Controller {
         System.out.println("===========================================");
         System.out.println("Press Enter to return...");
         sc.nextLine();
+    }
+    // Controller.java 내부
+
+    public int safeInput() {
+        while (true) {
+            try {
+                return Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.print("! 숫자만 입력 가능합니다. 다시 입력 > ");
+            }
+        }
     }
 }
 
